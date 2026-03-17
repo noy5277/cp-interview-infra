@@ -16,7 +16,7 @@ module "subnets" {
   tags = {
     Name                                               = "${var.eks_name}-${var.env}-${each.value.type}-${each.value.availability_zone}"
     "kubernetes.io/role/elb"                           = "1"
-    "kubernetes.io/cluster/${var.env}-${var.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.env}-${var.eks_name}" = "shared"
   }
 }
 
