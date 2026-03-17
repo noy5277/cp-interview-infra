@@ -1,0 +1,13 @@
+.vscode/*
+*.tfstate
+*.tfstate.backup
+.terraform/*
+.terraform.tfstate.lock.info
+projects/*
+templates/newazure/.terraform/*
+templates/.terraform/*
+*/.terraform/*
+**/.terraform/**
+**.lock.**
+**.auto.tfvars
+test.tf
