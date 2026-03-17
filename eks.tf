@@ -36,13 +36,18 @@ module "addons" {
 }
 
 module "lbc" {
-  source = "./modules/lbc"
-  vpc_id = module.vpc.id
-  eks_name = module.eks_cluster.name
+  source     = "./modules/lbc"
+  vpc_id     = module.vpc.id
+  eks_name   = module.eks_cluster.name
   depends_on = [module.eks_node_group]
 }
 
 module "argocd" {
-  source = "./modules/argocd"
+  source           = "./modules/argocd"
   eks_cluster_name = module.eks_cluster.name
+  argocd_namespace = "argocd"
+  cluster_display_name = module.eks_cluster.name
+  cluster_server = data.aws_eks_cluster.eks.endpoint
+  cluster_bearer_token = data.aws_eks_cluster_auth.eks.token
+  cluster_ca_data_b64 = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
 }

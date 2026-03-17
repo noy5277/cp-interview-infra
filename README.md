@@ -10,7 +10,8 @@ It includes the following components:
 - EKS Managed Node Groups  
 - EKS Addons  
 - AWS Load Balancer Controller (LBC)  
-- ECR Repository  
+- ECR Repository
+- Argocd deployment  
 
 All infrastructure is organized into reusable, modular Terraform components.
 
@@ -42,6 +43,9 @@ Deploys AWS Load Balancer Controller (ALB/ELB ingress support).
 
 ### **ECR Module (`./modules/ecr`)**
 Creates an AWS ECR repository for storing Docker container images.
+
+### ***Argocd module(`./modules/argocd`)**
+Deploy argocd helm chart on the cluster
 
 ---
 
@@ -140,6 +144,23 @@ Changes to Outputs:
   + cluster_name       = "stage-hello-world"
   + cluster_public_url = "https://26266F4CCC9802442E568EB2E3B0FC30.gr7.us-east-2.eks.amazonaws.com"
   + region             = "us-east-2"
+```
+
+5. Get kube-config by aws cli
+```
+aws eks update-kubeconfig --region <region> --name <cluster-name> --profile <aws-profile>
+```
+
+6. Login to argocd
+```
+export ARGO_PASS=$( kubectl -n argocd get secret argocd-initial-admin-secret   -o jsonpath="{.data.password}" | base64 -d)
+argocd login --insecure --user admin --password $ARGO_PASS
+```
+
+7. Adds clusters from your local kubeconfig file
+```
+kubectl config get-contexts 
+argocd cluster add <KUBE_CONTEXT_NAME>
 ```
 
 ## Contributors: ##
