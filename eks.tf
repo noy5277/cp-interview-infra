@@ -44,5 +44,5 @@ module "lbc" {
 
 module "argocd" {
   source = "./modules/argocd"
-  aks_cluster_name = module.eks_cluster.name
+  eks_cluster_name = module.eks_cluster.name
 }

@@ -11,4 +11,3 @@ resource "helm_release" "argocd" {
   ]
 }
 
-
