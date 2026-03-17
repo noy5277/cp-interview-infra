@@ -51,3 +51,8 @@ module "argocd" {
   cluster_bearer_token = data.aws_eks_cluster_auth.eks.token
   cluster_ca_data_b64 = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
 }
+
+module "secret-manager" {
+  source = "./modules/secret-manager"
+  eks_cluster_name = module.eks_cluster.name
+}
