@@ -153,8 +153,9 @@ aws eks update-kubeconfig --region <region> --name <cluster-name> --profile <aws
 
 6. Login to argocd
 ```
+kubectl port-forward svc/argocd-server -n argocd 8080:80 &
 export ARGO_PASS=$( kubectl -n argocd get secret argocd-initial-admin-secret   -o jsonpath="{.data.password}" | base64 -d)
-argocd login --insecure --user admin --password $ARGO_PASS
+argocd login localhost:8080 --insecure --user admin --password $ARGO_PASS
 ```
 
 7. Adds clusters from your local kubeconfig file
